@@ -437,23 +437,6 @@
         public static T3 RgbToHpl(T3 rgb) => LchToHpl(RgbToLch(rgb));
         #endregion
 
-        #region CMYK ↔ RGB
-        public static T3 CmykToRgb(T4 cmyk) {
-            var (c, m, y, k) = cmyk;
-            var k1 = 1 - k;
-
-            return ((1 - c) * k1, (1 - m) * k1, (1 - y) * k1);
-        }
-
-        public static T4 RgbToCmyk(T3 rgb) {
-            var (r, g, b) = rgb;
-            var k  = 1 - Max(r, Max(g, b));
-            var k1 = 1 - k;
-
-            return ((1 - r - k) * k1, (1 - g - k) * k1, (1 - b - k) * k1, k);
-        }
-        #endregion
-
         #region RGB ↔ HEX
         public static string RgbToHex(T3 rgb) {
             var (r, g, b) = ToBytes(rgb);
@@ -478,12 +461,6 @@
         public static string HplToHex(T3 hpl) => RgbToHex(HplToRgb(hpl));
 
         public static T3 HexToHpl(string hex) => RgbToHpl(HexToRgb(hex));
-        #endregion
-
-        #region CMYK ↔ HEX
-        public static string CmykToHex(T4 cmyk) => RgbToHex(CmykToRgb(cmyk));
-
-        public static T4 HexToCmyk(string hex) => RgbToCmyk(HexToRgb(hex));
         #endregion
     }
 }
